@@ -2,7 +2,7 @@
 # DevMountain Q Rewrite Project
 
 
-This is a ground-up rewrite of DevMountain's Q application.
+This is a ground-up rewrite of DevMountain's student queue application, `The Q`.
 
 ## Table of Contents
 

@@ -1,7 +1,16 @@
 require('dotenv').config();
 
+//----------------DEPS----------------//
+
 const express = require('express')
-    , port = process.env.PORT;
+    , bodyParser = require('body-parser')
+    , cors = require('cors')
+    , path = require('path');
+
+//------------CONTROLLERS-------------//
+
+
+const port = process.env.PORT;
 
 const app = express();
 
