@@ -1,0 +1,29 @@
+{
+  "name": "q_rewrite",
+  "version": "0.1.0",
+  "description": "Student Queue client for DevMountain.",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spcbrn/q_rewrite.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spcbrn/q_rewrite/issues"
+  },
+  "homepage": "https://github.com/spcbrn/q_rewrite#readme",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "main": "/server/index.js",
+  "proxy": "http://localhost:3030"
+}
