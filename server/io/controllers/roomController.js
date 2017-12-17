@@ -11,5 +11,18 @@ module.exports = {
         payload: response
       }
     );
+  },
+  leaveRoom: (action, socket, io) => {
+    let room_id = action.data;
+    let response = `user ${socket.id} left room ${room_id}`;
+
+    socket.join(room_id);
+    io.to(room_id).emit(
+      'action',
+      {
+        type: 'LEAVE_ROOM_CONFIRM',
+        payload: response
+      }
+    );
   }
 };

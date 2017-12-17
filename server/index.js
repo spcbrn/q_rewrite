@@ -28,6 +28,14 @@ const port = process.env.PORT || 8003
     , MongoURI = process.env.MONGO_URI
     , MongoDebug = process.env.MONGO_DEBUG;
 
+const authENV = {
+  appURL,
+  DMAuthApp,
+  DMAuthToken,
+  DMAuthSecret,
+  DMAuthCallback
+}
+
 //-------------APP SETUP--------------//
 
 // app.use(express.static(`${__dirname}/dist_build`));
@@ -57,44 +65,32 @@ app.use((req, res, next) => {
   return req.session ? next() : next(new Error('server not ready!'))
 });
 
+//-----------------DB-----------------//
+
+const appInitDB = async (app, mongoose, uri) => {
+  mongoose.Promise = global.Promise;
+  await mongoose.connect(
+    uri,
+    {useMongoClient: true},
+    () => console.log(`1/5 - DB connection initialized: ${uri}`)
+  );
+};
+
 //----------------AUTH----------------//
 
-app.get('/auth/devmtn', passport.authenticate('devmtn'));
-app.get('/auth/devmtn/callback',
-        (req, res, next) => {
-          next();
-        },
-        passport.authenticate(
-          'devmtn',
-          {failureRedirect: `${appURL}/`}
-        ), (req, res) => res.redirect(`${appURL}/home`)
-);
-app.get('/auth/devmtn/logout', DMStrategy.clearJwtAuthCookie, (req, res) => {
-  req.logout();
-  res.redirect(`${appURL}/`);
-});
+const appInitAuth = (app, passport, dm_strategy, env) => {
+  const authModule = require('./auth/authModule');
+  authModule(app, passport, dm_strategy, env);
+}
 
-passport.serializeUser((user, done) => {
-  done(null, user)
-});
-passport.deserializeUser((user, done) => {
-  done(null, user)
-});
+//-----------------IO-----------------//
 
-passport.use('devmtn',
-             new DMStrategy({
-               app: DMAuthApp,
-               client_token: DMAuthToken,
-               callbackURL: DMAuthCallback,
-               jwtSecret: DMAuthSecret
-             },
-             (jwtoken, user, done) => {
-               user.roles[0] = user.roles.length
-                               ? user.roles[0]
-                               : {role: 'student', id: 6};
-               done(null, user)
-             }));
-
+const appInitIO = (app, session, socket, port) => {
+  const ioModule = require('./io/ioModule')
+      , io = socket(app.listen(port, () => console.log(`5/5 - serving port ${port}`)));
+  ioModule.ioSessionMiddleware(io, session);
+  ioModule.addListeners(io);
+};
 
 //----------------REST----------------//
 
@@ -103,32 +99,17 @@ const appInitREST = app => {
   restModule(app);
 };
 
-//-----------------IO-----------------//
-
-const appInitIO = (app, session, socket, port) => {
-  const ioModule = require('./io/ioModule')
-      , io = socket(app.listen(port, () => console.log(`serving port ${port}`)))
-      , db = 'db';
-  ioModule.ioSessionMiddleware(io, session);
-  ioModule.addListeners(io, db);
-};
-
-//-----------------DB-----------------//
-
-const appInitDB = async (app, mongoose, uri) => {
-  mongoose.Promise = global.Promise;
-  await mongoose.connect(
-    uri,
-    {useMongoClient: true},
-    () => console.log(`connected to MongoDB: ${uri}`));
-};
-
 //-------------INITIALIZE-------------//
 
-const initializeWebServer = async (app, session, socket, port, mongoose, uri) => {
+const initializeWebServer = async (
+  app, session, passport, dm_strategy, socket, port, mongoose, uri, env
+) => {
   await appInitDB(app, mongoose, uri);
+  await appInitAuth(app, passport, dm_strategy, env)
   await appInitIO(app, session, socket, port);
   appInitREST(app);
-}
+};
 
-initializeWebServer(app, userSession, socket, port, mongoose, MongoURI);
+initializeWebServer(
+  app, userSession, passport, DMStrategy, socket, port, mongoose, MongoURI, authENV
+);

@@ -14,6 +14,8 @@ const reducer = (state = initialState, action) => {
     case 'TEST_CASE':
       return Object.assign({}, state, {testSuccess: action.payload});
     case 'JOIN_ROOM_CONFIRM':
+      return state; 
+    case 'LEAVE_ROOM_CONFIRM':
       return state;
     default:
       return state;
