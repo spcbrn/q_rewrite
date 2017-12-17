@@ -45,7 +45,7 @@ const session = require('express-session')
                                    autoRemove: 'native',
                                    mongooseConnection: mongoose.connection
                                  })
-                  });
+                    });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: false} ));
@@ -54,7 +54,7 @@ app.use(userSession);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
-  return req.session ? next() : next(new Error('server not ready'))
+  return req.session ? next() : next(new Error('server not ready!'))
 });
 
 //----------------AUTH----------------//
@@ -63,14 +63,15 @@ app.use((req, res, next) => {
 
 //----------------REST----------------//
 
-const restModule = require('./REST/restModule');
+const restModule = require('./rest/restModule');
 const appInitREST = app => restModule(app);
 
 //-----------------IO-----------------//
 
 const ioModule = require('./io/ioModule');
-const appInitIO = (app, session, db, port) => {
-  const io = socket(app.listen(port, () => console.log(`serving port ${port}`)));
+const appInitIO = (app, session, socket, port) => {
+  const io = socket(app.listen(port, () => console.log(`serving port ${port}`)))
+      , db = 'db';
   ioModule.applyMiddleware(io, session);
   ioModule.addListeners(io, db);
 };
@@ -81,10 +82,10 @@ const appInitDB = (app) => 'app.set expression';
 
 //-------------INITIALIZE-------------//
 
-const initializeAppServer = async (app, session, port) => {
+const initializeWebServer = async (app, session, socket, port) => {
   await appInitDB(app);
+  await appInitIO(app, session, socket, port);
   appInitREST(app);
-  appInitIO(app, session, db, port);
 }
 
-initializeAppServer(app, userSession, port);
+initializeWebServer(app, userSession, socket, port);

@@ -12,17 +12,17 @@ const socket = io()
 
 const storeInit = () => {
   let makeStore = process.env.NODE_ENV === 'development'
-         ? createStore(reducer,
-             applyMiddleware(
-               promiseMiddleware(),
-               socketIoMiddleware,
-               logger
-             ))
-         : createStore(reducer,
-             applyMiddleware(
-               promiseMiddleware(),
-               socketIoMiddleware
-             ));
+                  ? createStore(reducer,
+                      applyMiddleware(
+                        promiseMiddleware(),
+                        socketIoMiddleware,
+                        logger
+                      ))
+                  : createStore(reducer,
+                      applyMiddleware(
+                        promiseMiddleware(),
+                        socketIoMiddleware
+                      ));
   return makeStore;
 };
 
