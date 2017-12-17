@@ -28,11 +28,6 @@ const port = process.env.PORT || 8003
     , MongoURI = process.env.MONGO_URI
     , MongoDebug = process.env.MONGO_DEBUG;
 
-
-//------------CONTROLLERS-------------//
-
-
-
 //-------------APP SETUP--------------//
 
 // app.use(express.static(`${__dirname}/dist_build`));
@@ -52,7 +47,6 @@ const session = require('express-session')
                                  })
                   });
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: false} ));
 app.use(cors());
@@ -70,27 +64,25 @@ app.use((req, res, next) => {
 //----------------REST----------------//
 
 const restModule = require('./REST/restModule');
-
 const appInitREST = app => restModule(app);
 
 //-----------------IO-----------------//
 
 const ioModule = require('./io/ioModule');
-
 const appInitIO = (app, session, db, port) => {
   const io = socket(app.listen(port, () => console.log(`serving port ${port}`)));
   ioModule.applyMiddleware(io, session);
-  ioModule.addListeners(io, db)
+  ioModule.addListeners(io, db);
 };
 
 //-----------------DB-----------------//
 
-const appInitDB = () => 'db test string';
+const appInitDB = (app) => 'app.set expression';
 
 //-------------INITIALIZE-------------//
 
 const initializeAppServer = async (app, session, port) => {
-  let db = await appInitDB();
+  await appInitDB(app);
   appInitREST(app);
   appInitIO(app, session, db, port);
 }

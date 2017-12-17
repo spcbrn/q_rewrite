@@ -1,8 +1,8 @@
 module.exports = {
   joinRoom: (action, socket, io) => {
-    socket.join(action.data)
     let logMsg = `user ${socket.id} joined room ${action.data}`;
-    console.log(logMsg);
+
+    socket.join(action.data)
     io.to(action.data).emit(
       'action',
       {

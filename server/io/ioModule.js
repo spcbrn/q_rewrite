@@ -1,5 +1,5 @@
 const sharedSession = require('express-socket.io-session')
-    , ioReducer = require('./ioReducer');
+const ioReducer = require('./ioReducer');
 
 module.exports = {
   applyMiddleware: (io, session) => {
