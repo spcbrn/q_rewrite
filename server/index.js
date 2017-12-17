@@ -37,28 +37,31 @@ const port = process.env.PORT || 8003
 
 // app.use(express.static(`${__dirname}/dist_build`));
 
-const session = require('express-session')({
-  secret: sessionSecret,
-  name: 'theQCookie.sid',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {maxAge: 1000 * 60 * 60 * 24},
-  store: sessionStore
-});
+const session = require('express-session')
+    , MongoStore = connectMongo(session)
+    , userSession = session({
+                      secret: sessionSecret,
+                      name: 'theQCookie.sid',
+                      resave: false,
+                      saveUninitialized: false,
+                      cookie: {maxAge: 900000},
+                      store: new MongoStore({
+                                   collection: 'connect-mongoSessions',
+                                   autoRemove: 'native',
+                                   mongooseConnection: mongoose.connection
+                                 })
+                  });
 
-const MongoStore = connectMongo(session);
-const SessionStore = new MongoStore({
-  collection: 'connect-mongoSessions',
-  autoRemove: 'native',
-  mongooseConnection: mongoose.connection
-});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: false} ));
 app.use(cors());
-app.use(session);
+app.use(userSession);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use((req, res, next) => {
+  return req.session ? next() : next(new Error('server not ready'))
+});
 
 //----------------AUTH----------------//
 
@@ -66,6 +69,30 @@ app.use(passport.session());
 
 //----------------REST----------------//
 
-app.get('*', (req, res) => res.status(200).send('You\'ve done it!'));
+const restModule = require('./REST/restModule');
 
-app.listen(port, () => console.log(`serving port ${port}`));
+const appInitREST = app => restModule(app);
+
+//-----------------IO-----------------//
+
+const ioModule = require('./io/ioModule');
+
+const appInitIO = (app, session, db, port) => {
+  const io = socket(app.listen(port, () => console.log(`serving port ${port}`)));
+  ioModule.applyMiddleware(io, session);
+  ioModule.addListeners(io, db)
+};
+
+//-----------------DB-----------------//
+
+const appInitDB = () => 'db test string';
+
+//-------------INITIALIZE-------------//
+
+const initializeAppServer = async (app, session, port) => {
+  let db = await appInitDB();
+  appInitREST(app);
+  appInitIO(app, session, db, port);
+}
+
+initializeAppServer(app, userSession, port);

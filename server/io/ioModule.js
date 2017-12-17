@@ -1,6 +1,5 @@
-const sharedSession = require('express-socket.io-session');
-
-const ioReducer = require('./ioReducer');
+const sharedSession = require('express-socket.io-session')
+    , ioReducer = require('./ioReducer');
 
 module.exports = {
   applyMiddleware: (io, session) => {
@@ -15,11 +14,8 @@ module.exports = {
   },
   addListeners: (io, db) => {
     io.on('connect', (socket) => {
-      console.log(`user connected ${socket.id}`)
-
       socket.on('disconnect', () => console.log(`user disconnected ${socket.id}`));
-
-      socket.on('action', (action) => ioReducer(action, socket));
+      socket.on('action', (action) => ioReducer(action, socket, io));
     })
   }
 }

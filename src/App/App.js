@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import IOTest from './components/IOTest';
+
 import './App.css';
 
 class App extends Component {
@@ -6,6 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Does it tho?</h1>
+        <IOTest />
       </div>
     );
   }
