@@ -59,33 +59,76 @@ app.use((req, res, next) => {
 
 //----------------AUTH----------------//
 
+app.get('/auth/devmtn', passport.authenticate('devmtn'));
+app.get('/auth/devmtn/callback',
+        (req, res, next) => {
+          next();
+        },
+        passport.authenticate(
+          'devmtn',
+          {failureRedirect: `${appURL}/`}
+        ), (req, res) => res.redirect(`${appURL}/home`)
+);
+app.get('/auth/devmtn/logout', DMStrategy.clearJwtAuthCookie, (req, res) => {
+  req.logout();
+  res.redirect(`${appURL}/`);
+});
+
+passport.serializeUser((user, done) => {
+  done(null, user)
+});
+passport.deserializeUser((user, done) => {
+  done(null, user)
+});
+
+passport.use('devmtn',
+             new DMStrategy({
+               app: DMAuthApp,
+               client_token: DMAuthToken,
+               callbackURL: DMAuthCallback,
+               jwtSecret: DMAuthSecret
+             },
+             (jwtoken, user, done) => {
+               user.roles[0] = user.roles.length
+                               ? user.roles[0]
+                               : {role: 'student', id: 6};
+               done(null, user)
+             }));
 
 
 //----------------REST----------------//
 
-const restModule = require('./rest/restModule');
-const appInitREST = app => restModule(app);
+const appInitREST = app => {
+  const restModule = require('./rest/restModule');
+  restModule(app);
+};
 
 //-----------------IO-----------------//
 
-const ioModule = require('./io/ioModule');
 const appInitIO = (app, session, socket, port) => {
-  const io = socket(app.listen(port, () => console.log(`serving port ${port}`)))
+  const ioModule = require('./io/ioModule')
+      , io = socket(app.listen(port, () => console.log(`serving port ${port}`)))
       , db = 'db';
-  ioModule.applyMiddleware(io, session);
+  ioModule.ioSessionMiddleware(io, session);
   ioModule.addListeners(io, db);
 };
 
 //-----------------DB-----------------//
 
-const appInitDB = (app) => 'app.set expression';
+const appInitDB = async (app, mongoose, uri) => {
+  mongoose.Promise = global.Promise;
+  await mongoose.connect(
+    uri,
+    {useMongoClient: true},
+    () => console.log(`connected to MongoDB: ${uri}`));
+};
 
 //-------------INITIALIZE-------------//
 
-const initializeWebServer = async (app, session, socket, port) => {
-  await appInitDB(app);
+const initializeWebServer = async (app, session, socket, port, mongoose, uri) => {
+  await appInitDB(app, mongoose, uri);
   await appInitIO(app, session, socket, port);
   appInitREST(app);
 }
 
-initializeWebServer(app, userSession, socket, port);
+initializeWebServer(app, userSession, socket, port, mongoose, MongoURI);
