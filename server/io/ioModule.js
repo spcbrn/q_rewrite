@@ -19,12 +19,11 @@ module.exports = {
   },
   //adds all of the socket event listeners and dispatchers to the app
   addListeners: (io) => {
-    console.log('3/5 - socket services initialized')
-
     io.on('connect', (socket) => {
       console.log(`user ${socket.user.id} connected on ${socket.id}`)
       socket.on('disconnect', () => console.log(`user ${socket.user.id} disconnected from ${socket.id}`));
       socket.on('action', (action) => ioReducer(action, socket, io));
     })
+    console.log('3/5 - socket services initialized')
   }
 };
