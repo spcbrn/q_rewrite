@@ -1,9 +1,9 @@
 import testReducer from './reducers/testReducer';
 import userReducer from './reducers/userReducer';
 
-const ducksReducers = {
+const restReducers = {
   test: testReducer,
   users: userReducer
 };
 
-export default ducksReducers;
+export default restReducers;

@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import ioController from './../../redux/io/ioController';
-import ducksController from './../../redux/ducks/ducksController';
+import { default as ioCtrl } from './../../redux/io/ioActionsController';
+import { default as restCtrl } from './../../redux/rest/restActionsController';
 
-const { joinRoom, leaveRoom } = ioController;
-const { testToggle, getUser } = ducksController;
+const { joinRoom, leaveRoom } = ioCtrl;
+const { testToggle, getUser } = restCtrl;
 
 const IOTest = (props) => {
-  console.log(ducksController);
   props.testToggle();
   return (
     <div>

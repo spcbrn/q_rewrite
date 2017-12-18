@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import ioReducers from './io/ioReducers';
-import ducksReducers from './ducks/ducksReducers';
+import restReducers from './rest/restReducers';
 
 const { rooms } = ioReducers;
-const { test, users } = ducksReducers;
+const { test, users } = restReducers;
 
 export default combineReducers( { rooms, test, users } );

@@ -66,7 +66,7 @@ app.use((req, res, next) => {
   return req.session ? next() : next(new Error('server not ready!'))
 });
 
-//-------------INITIALIZE-------------//
+//---------INITIALIZE SERVER----------//
 
 const initialize_web_server = async (
     app, mongoose, db_uri, passport, dm_strategy, auth_env, session, socket, port
@@ -74,7 +74,7 @@ const initialize_web_server = async (
     const {
 
       //-----------------DB-----------------//
-      
+
       load_app_module_db,
 
       //----------------AUTH----------------//
