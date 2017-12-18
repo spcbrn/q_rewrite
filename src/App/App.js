@@ -9,6 +9,12 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Does it tho?</h1>
+        <a href="http://localhost:8003/auth/devmtn">
+          <button>Login</button>
+        </a>
+        <a href="http://localhost:8003/auth/devmtn/logout">
+          <button>Logout</button>
+        </a>
         <IOTest />
       </div>
     );

@@ -9,21 +9,23 @@ import reducer from './ducks/testReducer';
 const socket = io()
     , socketIoMiddleware = createSocketIoMiddleware(socket, 'server/');
 
-
 const storeInit = () => {
-  let makeStore = process.env.NODE_ENV === 'development'
-                  ? createStore(reducer,
-                      applyMiddleware(
-                        promiseMiddleware(),
-                        socketIoMiddleware,
-                        logger
-                      ))
-                  : createStore(reducer,
-                      applyMiddleware(
-                        promiseMiddleware(),
-                        socketIoMiddleware
-                      ));
-  return makeStore;
+  return process.env.NODE_ENV === 'development'
+         ? createStore(
+             reducer,
+             applyMiddleware(
+               promiseMiddleware(),
+               socketIoMiddleware,
+               logger
+             )
+           )
+         : createStore(
+             reducer,
+             applyMiddleware(
+               promiseMiddleware(),
+               socketIoMiddleware
+             )
+           );
 };
 
 const store = storeInit();

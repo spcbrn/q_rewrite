@@ -2,18 +2,18 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
   email: {type: String, require: true, unique: true, index: true},
-  firstName: {type: String, required: true},
-  lastName: {type: String, required: true},
-  imageUrl: {type: String},
+  first_name: {type: String, required: true},
+  last_name: {type: String, required: true},
+  image_url: {type: String},
   logins: [{type: Date}],
   devMtn: {
       id: {type: String},
       roles: [{}],
-      cohortId: {type: String},
+      cohort_id: {type: String},
   },
-  preferences:{
-    defaultCohort: String,
-    squelchCohorts: [String]
+  preferences: {
+    default_cohort: {type: String},
+    squelch_cohorts: [String]
   }
 });
 
