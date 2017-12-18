@@ -3,6 +3,7 @@ const ioReducer = require('./ioReducer');
 
 module.exports = {
   //shares the passport user with the socket instance, adding it to socket.user
+  //if no passport user object, set a default user object with a null id
   ioSessionMiddleware: (io, session) => {
     io.use(sharedSession(session, {
       autoSave: true

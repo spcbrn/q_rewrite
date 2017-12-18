@@ -102,8 +102,8 @@ const appInitREST = app => {
 //-------------INITIALIZE-------------//
 
 const initializeWebServer = async (
-  app, session, passport, dm_strategy, socket, port, mongoose, uri, env
-) => {
+    app, mongoose, uri, passport, dm_strategy, env, session, socket, port
+  ) => {
   await appInitDB(app, mongoose, uri);
   await appInitAuth(app, passport, dm_strategy, env)
   await appInitIO(app, session, socket, port);
@@ -111,5 +111,5 @@ const initializeWebServer = async (
 };
 
 initializeWebServer(
-  app, userSession, passport, DMStrategy, socket, port, mongoose, MongoURI, authENV
+  app, mongoose, MongoURI, passport, DMStrategy, authENV, userSession, socket, port
 );
