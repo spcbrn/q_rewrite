@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import createSocketIoMiddleware from 'redux-socket.io';
 import logger from 'redux-logger';
 
-import reducer from './mainReducer';
+import reducer from './main_reducer';
 
 const socket = io()
     , socketIoMiddleware = createSocketIoMiddleware(socket, 'server/');
