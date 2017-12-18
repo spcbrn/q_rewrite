@@ -11,7 +11,8 @@ const express = require('express')
     , mongoose = require('mongoose')
     , connectMongo = require('connect-mongo')
     , DMAuth = require('devmtn-auth')
-    , DMStrategy = DMAuth.Strategy;
+    , DMStrategy = DMAuth.Strategy
+    , services = require('./services');
 
 const app = express();
 
@@ -65,51 +66,42 @@ app.use((req, res, next) => {
   return req.session ? next() : next(new Error('server not ready!'))
 });
 
-//-----------------DB-----------------//
+//------------LOAD MODULES------------//
 
-const appInitDB = async (app, mongoose, uri) => {
-  mongoose.Promise = global.Promise;
-  await mongoose.connect(
-    uri,
-    {useMongoClient: true},
-    () => console.log(`1/5 - DB connection initialized: ${uri}`)
-  );
-};
+const {
 
-//----------------AUTH----------------//
+  //-----------------DB-----------------//
 
-const appInitAuth = (app, passport, dm_strategy, env) => {
-  const authModule = require('./auth/authModule');
-  authModule(app, passport, dm_strategy, env);
-}
+  load_app_module_db,
 
-//-----------------IO-----------------//
+  //----------------AUTH----------------//
 
-const appInitIO = (app, session, socket, port) => {
-  const ioModule = require('./io/ioModule')
-      , io = socket(app.listen(port, () => console.log(`5/5 - serving port ${port}`)));
-  ioModule.ioSessionMiddleware(io, session);
-  ioModule.addListeners(io);
-};
+  load_app_module_auth,
 
-//----------------REST----------------//
+  //-----------------IO-----------------//
 
-const appInitREST = app => {
-  const restModule = require('./rest/restModule');
-  restModule(app);
-};
+  load_app_module_io,
+
+  //----------------REST----------------//
+
+  load_app_module_rest
+
+} = services.init;
+
 
 //-------------INITIALIZE-------------//
 
-const initializeWebServer = async (
-    app, mongoose, uri, passport, dm_strategy, env, session, socket, port
+const initialize_web_server = async (
+    app, mongoose, db_uri, passport, dm_strategy, auth_env, session, socket, port
   ) => {
-  await appInitDB(app, mongoose, uri);
-  await appInitAuth(app, passport, dm_strategy, env)
-  await appInitIO(app, session, socket, port);
-  appInitREST(app);
+  await load_app_module_db(mongoose, db_uri);
+  await load_app_module_auth(app, passport, dm_strategy, auth_env)
+  await load_app_module_io(app, session, socket, port);
+  load_app_module_rest(app);
 };
 
-initializeWebServer(
+//----------------START---------------//
+
+initialize_web_server(
   app, mongoose, MongoURI, passport, DMStrategy, authENV, userSession, socket, port
 );

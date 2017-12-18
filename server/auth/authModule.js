@@ -25,5 +25,5 @@ module.exports = (app, passport, DM_Strategy, env) => {
     )
   );
 
-  console.log('2/5 - auth services initialized');
+  console.log('2/5 - auth module initialized');
 }

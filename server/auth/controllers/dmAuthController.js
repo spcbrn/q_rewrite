@@ -1,4 +1,4 @@
-const User = require('./../../../db/models/User');
+const User = require('./../../db/models/User');
 
 
 module.exports = {
@@ -26,6 +26,7 @@ module.exports = {
           },
           (err, newUser) => {
             if (err) return done(err);
+            console.log('created user: ', newUser);
             // newUser.logins.push(new Date());
             // newUser.save();
             return done(null, newUser)
