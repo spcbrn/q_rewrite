@@ -66,34 +66,30 @@ app.use((req, res, next) => {
   return req.session ? next() : next(new Error('server not ready!'))
 });
 
-//------------LOAD MODULES------------//
-
-const {
-
-  //-----------------DB-----------------//
-
-  load_app_module_db,
-
-  //----------------AUTH----------------//
-
-  load_app_module_auth,
-
-  //-----------------IO-----------------//
-
-  load_app_module_io,
-
-  //----------------REST----------------//
-
-  load_app_module_rest
-
-} = services.init;
-
-
 //-------------INITIALIZE-------------//
 
 const initialize_web_server = async (
     app, mongoose, db_uri, passport, dm_strategy, auth_env, session, socket, port
   ) => {
+    const {
+
+      //-----------------DB-----------------//
+      
+      load_app_module_db,
+
+      //----------------AUTH----------------//
+
+      load_app_module_auth,
+
+      //-----------------IO-----------------//
+
+      load_app_module_io,
+
+      //----------------REST----------------//
+
+      load_app_module_rest
+
+    } = services.init;
   await load_app_module_db(mongoose, db_uri);
   await load_app_module_auth(app, passport, dm_strategy, auth_env)
   await load_app_module_io(app, session, socket, port);
