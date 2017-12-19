@@ -21,7 +21,11 @@ module.exports = {
   //adds all of the socket event listeners and dispatchers to the app
   addListeners: (io) => {
     io.on('connect', (socket) => {
-      console.log(`socket user ${socket.user._id} connected on ${socket.id}`)
+      //if there is no authenticated user on session, don't establish a socket connection with client
+      if (!socket.user._id) return;
+
+      console.log(`socket user ${socket.user.devMtn.roles} connected on ${socket.id}`)
+
       socket.on('disconnect', () => console.log(`socket user ${socket.user._id} disconnected from ${socket.id}`));
       socket.on('action', (action) => ioReducer(action, socket, io));
     })

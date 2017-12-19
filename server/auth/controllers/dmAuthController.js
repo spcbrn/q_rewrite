@@ -40,6 +40,7 @@ module.exports = {
     return res.redirect(`${appURL}/`);
   },
   successRedirect: (req, res, appURL) => {
+    console.log('redirecting user: ', req.user.devMtn.roles)
     return res.redirect(`${appURL}/test`);
   },
   serializeUser: (q_user, done) => {
