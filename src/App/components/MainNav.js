@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-// import Splash from './Splash';
 import './styles/MainNav.css';
 
 import app_services from './../app_services';
@@ -15,7 +14,7 @@ const { setCurrentUser } = restCtrl;
 const MainNav = (props) => {
   const { checkForSession, serverRedirect } = app_services;
   const Splash = () => <div id="splash_box"></div>;
-
+  
   checkForSession(props.is_session, props, serverRedirect);
 
   return (
