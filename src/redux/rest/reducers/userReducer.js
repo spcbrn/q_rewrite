@@ -10,7 +10,7 @@ const userReducer = (state = userStates, action) => {
     case `${GET_CURRENT_USER}_REJECTED`:
       return state;
     case `${GET_CURRENT_USER}_FULFILLED`:
-      return Object.assign({}, state, {current_user: action.payload.data});
+      return Object.assign({}, state, { current_user: action.payload.data });
     default:
       return state;
   }

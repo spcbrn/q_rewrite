@@ -1,11 +1,13 @@
-const authCtrl = require('./controllers/dmAuthController');
 
 module.exports = (app, passport, DM_Strategy, env) => {
+  const authCtrl = require('./controllers/dmAuthController');
 
   app.get('/auth/devmtn', passport.authenticate('devmtn'));
+
   app.get('/auth/devmtn/callback',
     passport.authenticate('devmtn', {failureRedirect: `${env.appURL}/`}),
     (req, res) => authCtrl.successRedirect(req, res, env.appURL));
+
   app.get('/auth/devmtn/logout',
     DM_Strategy.clearJwtAuthCookie,
     (req, res) => authCtrl.authLogout(req, res, env.appURL));
@@ -26,4 +28,4 @@ module.exports = (app, passport, DM_Strategy, env) => {
   );
 
   console.log('2/5...auth module initialized');
-}
+};

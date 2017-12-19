@@ -1,4 +1,4 @@
-const services = {
+const redux_services = {
   combineControllers: (controllers) => {
     let combined = {};
     Object.keys(controllers).forEach(c => {
@@ -15,9 +15,8 @@ const services = {
         combined[k] = reducers[c][k];
       }
     })
-    console.log(reducers)
     return combined;
   }
-}
+};
 
-export default services;
+export default redux_services;

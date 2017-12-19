@@ -11,7 +11,7 @@ module.exports = {
       if (existing_q_user) {
         // existing_q_user.logins.push(new Date());
         // existing_q_user.save(done);
-        return done(null, existing_q_user)
+        return done(null, existing_q_user);
       } else {
         User.create(
           {
@@ -29,18 +29,18 @@ module.exports = {
             console.log('created new user: ', new_q_user);
             // new_q_user.logins.push(new Date());
             // new_q_user.save();
-            return done(null, new_q_user)
+            return done(null, new_q_user);
           }
-        )
-      }
-    })
+        );
+      };
+    });
   },
   authLogout: (req, res, appURL) => {
     req.logout();
     return res.redirect(`${appURL}/`);
   },
   successRedirect: (req, res, appURL) => {
-    return res.redirect(`${appURL}/test`)
+    return res.redirect(`${appURL}/test`);
   },
   serializeUser: (q_user, done) => {
     return done(null, q_user);
@@ -49,6 +49,6 @@ module.exports = {
     User.findOne({_id: q_user._id}, (err, q_user) => {
       if (err) return done(err);
       return done(null, q_user)
-    })
+    });
   }
 };

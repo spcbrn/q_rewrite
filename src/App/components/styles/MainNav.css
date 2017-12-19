@@ -1,0 +1,17 @@
+#main_nav {
+  width: 100%;
+  height: 80px;
+  background: #999999;
+  position: relative;
+}
+
+#splash_box {
+  width: 100vw;
+  height: 100vh;
+  background: #FFFFFF;
+  position: absolute;
+  background-image: url(../../../assets/DevMountain_Logo.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 200px auto;
+}

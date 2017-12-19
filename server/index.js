@@ -35,7 +35,7 @@ const appENV = {
   DMAuthToken,
   DMAuthSecret,
   DMAuthCallback
-}
+};
 
 //-------------APP SETUP--------------//
 
@@ -73,7 +73,7 @@ const initialize_web_server = async (
   ) => {
     const {
 
-      //-----------------DB-----------------//
+      //-----------MONGO DATABASE-----------//
 
       load_app_module_db,
 
@@ -81,7 +81,7 @@ const initialize_web_server = async (
 
       load_app_module_auth,
 
-      //-----------------IO-----------------//
+      //-------------SOCKET IO--------------//
 
       load_app_module_io,
 
@@ -91,9 +91,9 @@ const initialize_web_server = async (
 
     } = services.init;
   await load_app_module_db(mongoose, db_uri);
-  await load_app_module_auth(app, passport, dm_strategy, app_env)
+  await load_app_module_auth(app, passport, dm_strategy, app_env);
   await load_app_module_io(app, session, socket, port);
-  load_app_module_rest(app, app_env);
+  load_app_module_rest(app);
 };
 
 //----------------START---------------//
