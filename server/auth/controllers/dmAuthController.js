@@ -6,12 +6,12 @@ module.exports = {
     user.roles[0] = user.roles.length
                     ? user.roles[0]
                     : {role: 'student', id: 6};
-    User.findOne({email: user.email}, (err, existingUser) => {
+    User.findOne({email: user.email}, (err, existing_q_user) => {
       if (err) return done(err);
-      if (existingUser) {
-        // existingUser.logins.push(new Date());
-        // existingUser.save(done);
-        return done(null, existingUser)
+      if (existing_q_user) {
+        // existing_q_user.logins.push(new Date());
+        // existing_q_user.save(done);
+        return done(null, existing_q_user)
       } else {
         User.create(
           {
@@ -24,12 +24,12 @@ module.exports = {
                 cohort_id: user.cohortId
             }
           },
-          (err, newUser) => {
+          (err, new_q_user) => {
             if (err) return done(err);
-            console.log('created user: ', newUser);
-            // newUser.logins.push(new Date());
-            // newUser.save();
-            return done(null, newUser)
+            console.log('created new user: ', new_q_user);
+            // new_q_user.logins.push(new Date());
+            // new_q_user.save();
+            return done(null, new_q_user)
           }
         )
       }
@@ -40,12 +40,15 @@ module.exports = {
     return res.redirect(`${appURL}/`);
   },
   successRedirect: (req, res, appURL) => {
-    return res.redirect(`${appURL}/home`)
+    return res.redirect(`${appURL}/test`)
   },
-  serializeUser: (user, done) => {
-    return done(null, user);
+  serializeUser: (q_user, done) => {
+    return done(null, q_user);
   },
-  deserializeUser: (user, done) => {
-    return done(null, user);
+  deserializeUser: (q_user, done) => {
+    User.findOne({_id: q_user._id}, (err, q_user) => {
+      if (err) return done(err);
+      return done(null, q_user)
+    })
   }
 };

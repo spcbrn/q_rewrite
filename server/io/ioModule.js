@@ -25,6 +25,6 @@ module.exports = {
       socket.on('disconnect', () => console.log(`socket user ${socket.user._id} disconnected from ${socket.id}`));
       socket.on('action', (action) => ioReducer(action, socket, io));
     })
-    console.log('3/5 - socket connections initialized')
+    console.log('3/5...socket module initialized')
   }
 };

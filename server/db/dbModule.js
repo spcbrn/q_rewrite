@@ -6,5 +6,5 @@ module.exports = async (mongoose, uri) => {
     uri,
     {useMongoClient: true}
   );
-  console.log(`1/5 - DB connection initialized: ${uri}`)
+  console.log(`1/5...DB module initialized: ${uri}`)
 }
