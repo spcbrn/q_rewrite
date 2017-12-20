@@ -19,7 +19,7 @@ const app = express();
 //---------------CONFIG---------------//
 
 const port = process.env.PORT || 8003
-    , appURL = process.env.REACT_APP_BASEURL
+    , app_url = process.env.REACT_APP_BASEURL
     , AdminToken = process.env.ADMIN_TOKEN
     , DMAuthApp = process.env.DM_APP
     , DMAuthToken = process.env.DM_AUTH_TOKEN
@@ -30,7 +30,7 @@ const port = process.env.PORT || 8003
     , MongoDebug = process.env.MONGO_DEBUG;
 
 const appENV = {
-  appURL,
+  app_url,
   DMAuthApp,
   DMAuthToken,
   DMAuthSecret,

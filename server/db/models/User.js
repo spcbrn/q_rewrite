@@ -7,9 +7,9 @@ const schema = new mongoose.Schema({
   image_url: {type: String},
   logins: [{type: Date}],
   devMtn: {
-      id: {type: String},
-      roles: [{}],
-      cohort_id: {type: String},
+    id: {type: String},
+    roles: [{}],
+    cohort_id: {type: String},
   },
   preferences: {
     default_cohort: {type: String},

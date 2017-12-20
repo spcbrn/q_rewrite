@@ -1,16 +1,18 @@
 
 module.exports = (app, passport, DM_Strategy, env) => {
-  const authCtrl = require('./controllers/dmAuthController');
+  const authCtrl = require('./controllers/authController');
 
-  app.get('/auth/devmtn', passport.authenticate('devmtn'));
+  app.get('/auth/devmtn',
+    authCtrl.addSourcePathToSession,
+    passport.authenticate('devmtn'));
 
   app.get('/auth/devmtn/callback',
-    passport.authenticate('devmtn', {failureRedirect: `${env.appURL}/`}),
-    (req, res) => authCtrl.successRedirect(req, res, env.appURL));
+    passport.authenticate('devmtn', {failureRedirect: `${env.app_url}/`}),
+    (req, res) => authCtrl.successRedirect(req, res, env.app_url));
 
   app.get('/auth/devmtn/logout',
     DM_Strategy.clearJwtAuthCookie,
-    (req, res) => authCtrl.authLogout(req, res, env.appURL));
+    (req, res) => authCtrl.authLogout(req, res, env.app_url));
 
   passport.serializeUser(authCtrl.serializeUser);
   passport.deserializeUser(authCtrl.deserializeUser);

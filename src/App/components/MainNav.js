@@ -14,21 +14,20 @@ const { setCurrentUser } = restCtrl;
 const MainNav = (props) => {
   const { checkForSession, serverRedirect } = app_services;
   const Splash = () => <div id="splash_box"></div>;
-  
-  checkForSession(props.is_session, props, serverRedirect);
+
+  checkForSession(props.is_session, props, serverRedirect, window.location.pathname);
 
   return (
     <nav id="main_nav">
-      { props.is_session ? null : Splash() }
+      { props.is_session ? null : Splash() }  {/*add fade transition?*/}
     </nav>
   )
 };
 
 
 
-const mapStateToProps = state => { return { is_session: ( state.users.current_user === null
+
+const mapStateToProps = state => { return { is_session: ( !state.users.current_user
                                                           ? false : true )}};
 
-export default withRouter(
-  connect( mapStateToProps, { setCurrentUser } )(MainNav)
-);
+export default withRouter( connect( mapStateToProps, { setCurrentUser } )(MainNav) );

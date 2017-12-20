@@ -24,9 +24,11 @@ module.exports = {
       //if there is no authenticated user on session, don't establish a socket connection with client
       if (!socket.user._id) return;
 
-      console.log(`socket user ${socket.user.devMtn.roles} connected on ${socket.id}`)
+      let user = `${socket.user.first_name} ${socket.user.last_name}`
+      console.log(`${user} connected on socket ${socket.id}`)
 
-      socket.on('disconnect', () => console.log(`socket user ${socket.user._id} disconnected from ${socket.id}`));
+      socket.on('disconnect', () => console.log(`${user} disconnected from ${socket.id}`));
+      //all socket 'action' events are sent through the io reducer
       socket.on('action', (action) => ioReducer(action, socket, io));
     })
     console.log('3/5...socket module initialized')

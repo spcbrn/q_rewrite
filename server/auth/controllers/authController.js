@@ -2,6 +2,10 @@ const User = require('./../../db/models/User');
 
 
 module.exports = {
+  addSourcePathToSession: (req, res, next) => {
+    req.session.src_path = req.query.src_;
+    return next();
+  },
   authLogin: (jwtoken, user, done) => {
     user.roles[0] = user.roles.length
                     ? user.roles[0]
@@ -35,21 +39,16 @@ module.exports = {
       };
     });
   },
-  authLogout: (req, res, appURL) => {
+  authLogout: (req, res, app_url) => {
     req.logout();
-    return res.redirect(`${appURL}/`);
+    return res.redirect(`${app_url}/`);
   },
-  successRedirect: (req, res, appURL) => {
-    console.log('redirecting user: ', req.user.devMtn.roles)
-    return res.redirect(`${appURL}/test`);
-  },
-  serializeUser: (q_user, done) => {
-    return done(null, q_user);
-  },
+
+  successRedirect: (req, res, app_url) => res.redirect(`${app_url}${req.session.src_path}`),
+  serializeUser: (q_user, done) =>  done(null, q_user),
   deserializeUser: (q_user, done) => {
-    User.findOne({_id: q_user._id}, (err, q_user) => {
-      if (err) return done(err);
-      return done(null, q_user)
-    });
+    User.findOne({_id: q_user._id}, (err, q_user) => err
+                                                     ? done(err)
+                                                     : done(null, q_user));
   }
 };
