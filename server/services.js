@@ -14,9 +14,16 @@ module.exports = {
             ioModule.ioSessionMiddleware(io, session);
             ioModule.addListeners(io);
           },
-          load_app_module_rest: app => {
+          load_app_module_rest: (app, path) => {
             const restModule = require('./rest/restModule');
-            restModule(app);
+            restModule(app, path);
           }
-    }
+    },
+  user: {
+          set_permissions: (dm_roles) => {
+            let adminRoles = {2: 'admin', 3: 'mentor', 4: 'lead-inst', 7: 'inst'};
+            let isAdmin = dm_roles.filter(c => adminRoles[c.id] ? adminRoles[c.id] : false);
+            return isAdmin.length > 0 ? 'admin' : 'student';
+          }
+        }
 };

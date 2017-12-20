@@ -7,6 +7,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   poll_type: {type: String, required: true},
+  poll_title: {type: String, required: true},
   subject: {type: String, required: true},
   poll_text: {type: String, required: true},
   poll_options: {

@@ -48,7 +48,7 @@ const session = require('express-session')
                       name: 'theQCookie.sid',
                       resave: false,
                       saveUninitialized: false,
-                      cookie: {maxAge: 900000},
+                      cookie: {maxAge: 6.048e+8},
                       store: new MongoStore({
                                    collection: 'connect-mongoSessions',
                                    autoRemove: 'native',
@@ -69,7 +69,7 @@ app.use((req, res, next) => {
 //---------INITIALIZE SERVER----------//
 
 const initialize_web_server = async (
-    app, mongoose, db_uri, passport, dm_strategy, app_env, session, socket, port, services
+    app, mongoose, db_uri, passport, dm_strategy, app_env, session, socket, port, path, services
   ) => {
     const {
 
@@ -93,11 +93,11 @@ const initialize_web_server = async (
   await load_app_module_db(mongoose, db_uri);
   await load_app_module_auth(app, passport, dm_strategy, app_env);
   await load_app_module_io(app, session, socket, port);
-  load_app_module_rest(app);
+  load_app_module_rest(app, path);
 };
 
 //----------------START---------------//
 
 initialize_web_server(
-  app, mongoose, MongoURI, passport, DMStrategy, appENV, userSession, socket, port, services
+  app, mongoose, MongoURI, passport, DMStrategy, appENV, userSession, socket, port, path, services
 );

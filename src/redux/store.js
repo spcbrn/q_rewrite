@@ -6,13 +6,15 @@ import logger from 'redux-logger';
 
 import reducer from './main_reducer';
 
-const socket = io()
+const redux_devtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    , socket = io()
     , socketIoMiddleware = createSocketIoMiddleware(socket, 'server/');
 
 const storeInit = () => {
   return process.env.NODE_ENV === 'development'
          ? createStore(
              reducer,
+             redux_devtools,
              applyMiddleware(
                promiseMiddleware(),
                socketIoMiddleware,
@@ -21,6 +23,7 @@ const storeInit = () => {
            )
          : createStore(
              reducer,
+             redux_devtools,
              applyMiddleware(
                promiseMiddleware(),
                socketIoMiddleware

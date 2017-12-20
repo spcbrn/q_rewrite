@@ -12,6 +12,7 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'PollTemplate'
   },
+  poll_title: {type: String, required: true},
   subject: {type: String, required: true},
   poll_text: {type: String, required: true},
   poll_options: {

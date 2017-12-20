@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import './styles/MainNav.css';
 
@@ -20,6 +20,11 @@ const MainNav = (props) => {
   return (
     <nav id="main_nav">
       { props.is_session ? null : Splash() }  {/*add fade transition?*/}
+      <Link to="/home">home</Link>
+      <Link to="/test"> test</Link>
+      <Link to="/dashboard"> dashboard</Link>
+      <Link to="/"> root</Link><br />
+      {props.is_session ? `Welcome, ${props.user.first_name}.` : null}
     </nav>
   )
 };
@@ -27,7 +32,11 @@ const MainNav = (props) => {
 
 
 
-const mapStateToProps = state => { return { is_session: ( !state.users.current_user
-                                                          ? false : true )}};
+const mapStateToProps = state => {
+  return {
+    is_session: !state.users.current_user ? false : true,
+    user: state.users.current_user
+  }
+};
 
 export default withRouter( connect( mapStateToProps, { setCurrentUser } )(MainNav) );

@@ -2,7 +2,8 @@ import React from 'react';
 
 import IOTest from './../components/IOTest';
 
-const Test = () => {
+const Test = (props) => {
+
   return (
     <div>
       <h1>Test Auth:</h1>

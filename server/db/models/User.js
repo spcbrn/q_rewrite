@@ -11,6 +11,7 @@ const schema = new mongoose.Schema({
     roles: [{}],
     cohort_id: {type: String},
   },
+  permissions: {type: String},
   preferences: {
     default_cohort: {type: String},
     squelch_cohorts: [String]
