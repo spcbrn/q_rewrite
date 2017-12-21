@@ -1,4 +1,4 @@
-const userCtrl = require('./controllers/restUserController');
+const userCtrl = require('./controllers/userController_REST');
 
 
 module.exports = (app, path) => {

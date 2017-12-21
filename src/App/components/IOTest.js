@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { default as ioCtrl } from './../../redux/io/ioActionsController';
-import { default as restCtrl } from './../../redux/rest/restActionsController';
+import { default as ioCtrl } from './../../redux/io/actionsController_IO';
+import { default as restCtrl } from './../../redux/rest/actionsController_REST';
 
 const { joinRoom, leaveRoom } = ioCtrl;
 const { getSessionUser } = restCtrl;

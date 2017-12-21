@@ -3,7 +3,7 @@ const testState = {
 };
 
 
-const testReducer = (state = testState, action) => {
+const testReducerREST = (state = testState, action) => {
   switch (action.type) {
     case 'TEST_CASE':
       return Object.assign({}, state, {testSuccess: action.payload});
@@ -12,4 +12,4 @@ const testReducer = (state = testState, action) => {
   }
 }
 
-export default testReducer;
+export default testReducerREST;

@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import './styles/MainNav.css';
 
 import app_services from './../app_services';
-import { default as restCtrl } from './../../redux/rest/restActionsController';
+import { default as restCtrl } from './../../redux/rest/actionsController_REST';
 
 const { setCurrentUser } = restCtrl;
 

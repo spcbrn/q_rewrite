@@ -1,11 +1,11 @@
-const userStates = {
+const userState = {
   current_user: null
 }
 
 const GET_CURRENT_USER = 'GET_CURRENT_USER';
 
 
-const userReducer = (state = userStates, action) => {
+const userReducerREST = (state = userState, action) => {
   switch (action.type) {
     case `${GET_CURRENT_USER}_REJECTED`:
       return state;
@@ -16,4 +16,4 @@ const userReducer = (state = userStates, action) => {
   }
 }
 
-export default userReducer;
+export default userReducerREST;

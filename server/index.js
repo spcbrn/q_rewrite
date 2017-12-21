@@ -30,6 +30,7 @@ const port = process.env.PORT || 8003
     , MongoDebug = process.env.MONGO_DEBUG;
 
 const appENV = {
+  port,
   app_url,
   DMAuthApp,
   DMAuthToken,
@@ -69,7 +70,7 @@ app.use((req, res, next) => {
 //---------INITIALIZE SERVER----------//
 
 const initialize_web_server = async (
-    app, mongoose, db_uri, passport, dm_strategy, app_env, session, socket, port, path, services
+    app, mongoose, db_uri, passport, dm_strategy, app_env, session, socket, path, services
   ) => {
     const {
 
@@ -92,12 +93,12 @@ const initialize_web_server = async (
     } = services.init;
   await load_app_module_db(mongoose, db_uri);
   await load_app_module_auth(app, passport, dm_strategy, app_env);
-  await load_app_module_io(app, session, socket, port);
+  await load_app_module_io(app, session, socket, app_env);
   load_app_module_rest(app, path);
 };
 
 //----------------START---------------//
 
 initialize_web_server(
-  app, mongoose, MongoURI, passport, DMStrategy, appENV, userSession, socket, port, path, services
+  app, mongoose, MongoURI, passport, DMStrategy, appENV, userSession, socket, path, services
 );

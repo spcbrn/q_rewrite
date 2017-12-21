@@ -8,9 +8,9 @@ module.exports = {
             const authModule = require('./auth/authModule');
             authModule(app, passport, dm_strategy, env);
           },
-          load_app_module_io: async (app, session, socket, port) => {
+          load_app_module_io: async (app, session, socket, env) => {
             const ioModule = require('./io/ioModule')
-                , io = await socket(app.listen(port, () => console.log(`5/5...server listening on port ${port}`)));
+                , io = await socket(app.listen(env.port, () => console.log(`5/5...server listening on port ${env.port}`)));
             ioModule.ioSessionMiddleware(io, session);
             ioModule.addListeners(io);
           },
