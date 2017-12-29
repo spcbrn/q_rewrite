@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-//----------------DEPS----------------//
+//------------DEPENDENCIES------------//
 
 const express = require('express')
     , bodyParser = require('body-parser')
@@ -16,7 +16,7 @@ const express = require('express')
 
 const app = express();
 
-//---------------CONFIG---------------//
+//-----------------ENV----------------//
 
 const port = process.env.PORT || 8003
     , app_url = process.env.REACT_APP_BASEURL

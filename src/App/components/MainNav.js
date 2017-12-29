@@ -20,10 +20,10 @@ const MainNav = (props) => {
   return (
     <nav id="main_nav">
       { props.is_session ? null : Splash() }  {/*add fade transition?*/}
-      <Link to="/home">home</Link>
+      <Link to="/studentq">studentq</Link>
       <Link to="/test"> test</Link>
-      <Link to="/dashboard"> dashboard</Link>
-      <Link to="/"> root</Link><br />
+      <Link to="/admin/dashboard"> admin dashboard</Link>
+      <Link to="/admin/q_preferences"> preferences</Link><br />
       {props.is_session ? `Welcome, ${props.user.first_name}.` : null}
     </nav>
   )

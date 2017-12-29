@@ -1,5 +1,5 @@
 const redux_services = {
-  combineControllers: (controllers) => {
+  combineDuxControllers: controllers => {
     let combined = {};
     Object.keys(controllers).forEach(c => {
       for (let k in controllers[c]) {
@@ -8,7 +8,7 @@ const redux_services = {
     })
     return combined;
   },
-  preCombineReducers: (reducers) => {
+  preCombineDuxReducers: reducers => {
     let combined = {};
     Object.keys(reducers).forEach(c => {
       for (let k in reducers[c]) {

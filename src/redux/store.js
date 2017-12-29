@@ -10,26 +10,24 @@ const redux_devtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEV
     , socket = io()
     , socketIoMiddleware = createSocketIoMiddleware(socket, 'server/');
 
-const storeInit = () => {
-  return process.env.NODE_ENV === 'development'
-         ? createStore(
-             reducer,
-             redux_devtools,
-             applyMiddleware(
-               promiseMiddleware(),
-               socketIoMiddleware,
-               logger
-             )
-           )
-         : createStore(
-             reducer,
-             redux_devtools,
-             applyMiddleware(
-               promiseMiddleware(),
-               socketIoMiddleware
-             )
-           );
-};
+const storeInit = () =>  process.env.NODE_ENV === 'development'
+                         ? createStore(
+                             reducer,
+                             redux_devtools,
+                             applyMiddleware(
+                               promiseMiddleware(),
+                               socketIoMiddleware,
+                               logger
+                             )
+                           )
+                         : createStore(
+                             reducer,
+                             redux_devtools,
+                             applyMiddleware(
+                               promiseMiddleware(),
+                               socketIoMiddleware
+                             )
+                           );
 
 const store = storeInit();
 

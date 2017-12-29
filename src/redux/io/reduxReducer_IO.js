@@ -1,7 +1,7 @@
 import roomReducer from './reducers/roomReducer_IO';
 
-const ioReducers = {
+const ioReducer = {
   rooms: roomReducer
 }
 
-export default ioReducers;
+export default ioReducer;

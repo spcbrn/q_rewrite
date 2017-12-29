@@ -1,5 +1,5 @@
 const sharedSession = require('express-socket.io-session')
-const ioReducer = require('./ioReducer');
+const ioReducer = require('./serverReducer_IO');
 
 module.exports = {
   //shares the passport user with the socket instance, adding it to socket.user

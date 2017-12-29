@@ -24,7 +24,7 @@ class App extends Component {
       <div className="App">
         <Switch>
           {/*
-            The porpose of this Switch is to validate the requested route/path.  If a user tries to navigate to an invalid path
+            The purpose of this Switch is to validate the requested route/path.  If a user tries to navigate to an invalid path
             (a path we don't have a route for), they will be redirected to the root path before the app is rendered.
 
             When adding a new view or route to the application, do so in router, and add an instance of it here rendering AppMain as seen below.
@@ -34,8 +34,9 @@ class App extends Component {
           */}
           <Route exact path="/" render={ props => AppMain(props, router)} />
           <Route exact path="/test" render={ props => AppMain(props, router)} />
-          <Route exact path="/home" render={ props => AppMain(props, router)} />
-          <Route exact path="/dashboard" render={ props => AppMain(props, router)} />
+          <Route exact path="/studentq" render={ props => AppMain(props, router)} />
+          <Route exact path="/admin/dashboard" render={ props => AppMain(props, router)} />
+          <Route exact path="/admin/q_preferences" render={ props => AppMain(props, router)} />
           <Route path="*" render={ props => <div>{props.history.push('/')}</div> } />
         </Switch>
       </div>
