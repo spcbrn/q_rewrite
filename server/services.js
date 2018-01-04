@@ -20,10 +20,10 @@ module.exports = {
           }
     },
   user: {
-          set_permissions: (dm_roles) => {
+          set_user_permissions: (dm_roles) => {
             let adminRoles = {2: 'admin', 3: 'mentor', 4: 'lead-inst', 7: 'inst'};
-            let isAdmin = dm_roles.filter(c => adminRoles[c.id] ? adminRoles[c.id] : false);
-            return isAdmin.length > 0 ? 'admin' : 'student';
+            let isAdmin = dm_roles.filter(c => adminRoles[c.id] ? adminRoles[c.id] : false)[0];
+            return isAdmin ? 'admin' : 'student';
           }
         }
 };

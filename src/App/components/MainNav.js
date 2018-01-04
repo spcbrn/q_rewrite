@@ -11,7 +11,7 @@ const { setCurrentUser } = restCtrl;
 
 
 
-const MainNav = (props) => {
+const MainNav = props => {
   const { checkForSession, serverRedirect } = app_services;
   const Splash = () => <div id="splash_box"></div>;
 
@@ -24,7 +24,7 @@ const MainNav = (props) => {
       <Link to="/test"> test</Link>
       <Link to="/admin/dashboard"> admin dashboard</Link>
       <Link to="/admin/q_preferences"> preferences</Link><br />
-      {props.is_session ? `Welcome, ${props.user.first_name}.` : null}
+      { props.is_session ? `Welcome, ${props.user.first_name}.` : null }
     </nav>
   )
 };
@@ -39,4 +39,4 @@ const mapStateToProps = state => {
   }
 };
 
-export default withRouter( connect( mapStateToProps, { setCurrentUser } )(MainNav) );
+export default withRouter( connect(mapStateToProps, { setCurrentUser })(MainNav) );

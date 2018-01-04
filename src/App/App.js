@@ -20,6 +20,7 @@ class App extends Component {
 
 
 
+
     return (
       <div className="App">
         <Switch>
@@ -32,11 +33,11 @@ class App extends Component {
             If the route your adding uses required params, add them here, use exact, and add them to the route in router.
             If the route you're adding uses optional params, don't add them here and don't use exact, but add them in router.
           */}
-          <Route exact path="/" render={ props => AppMain(props, router)} />
-          <Route exact path="/test" render={ props => AppMain(props, router)} />
-          <Route exact path="/studentq" render={ props => AppMain(props, router)} />
-          <Route exact path="/admin/dashboard" render={ props => AppMain(props, router)} />
-          <Route exact path="/admin/q_preferences" render={ props => AppMain(props, router)} />
+          <Route exact path="/" render={ props => AppMain(props, router) } />
+          <Route exact path="/test" render={ props => AppMain(props, router) } />
+          <Route exact path="/studentq" render={ props => AppMain(props, router) } />
+          <Route exact path="/admin/dashboard" render={ props => AppMain(props, router) } />
+          <Route exact path="/admin/q_preferences" render={ props => AppMain(props, router) } />
           <Route path="*" render={ props => <div>{props.history.push('/')}</div> } />
         </Switch>
       </div>

@@ -8,7 +8,7 @@ module.exports = {
     return next();
   },
   authLogin: (jwtoken, user, done) => {
-    const { set_permissions } = services.user;
+    const { set_user_permissions } = services.user;
 
     user.roles[0] = user.roles.length
                     ? user.roles[0]
@@ -30,7 +30,7 @@ module.exports = {
                 roles: user.roles,
                 cohort_id: user.cohortId
             },
-            permissions: set_permissions(user.roles)
+            permissions: set_user_permissions(user.roles)
           },
           (err, new_q_user) => {
             if (err) return done(err);
