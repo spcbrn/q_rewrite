@@ -29,9 +29,6 @@ const MainNav = props => {
   )
 };
 
-
-
-
 const mapStateToProps = state => {
   return {
     is_session: !state.users.current_user ? false : true,
