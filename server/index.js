@@ -70,7 +70,7 @@ app.use((req, res, next) => {
 //---------INITIALIZE SERVER----------//
 
 const initialize_web_server = async (
-    app, mongoose, db_uri, passport, dm_strategy, app_env, session, socket, path, services
+    { app, mongoose, db_uri, passport, dm_strategy, app_env, session, socket, path, services }
   ) => {
     const {
 
@@ -100,5 +100,5 @@ const initialize_web_server = async (
 //----------------START---------------//
 
 initialize_web_server(
-  app, mongoose, MongoURI, passport, DMStrategy, appENV, userSession, socket, path, services
+  { app, mongoose, MongoURI, passport, DMStrategy, appENV, userSession, socket, path, services }
 );
